@@ -9,10 +9,12 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { SettingPage } from '../pages/setting/setting';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { AddCustomerPage } from '../pages/addcustomer/addcustomer';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { IonicStorageModule } from '@ionic/storage';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -28,12 +30,14 @@ const cloudSettings: CloudSettings = {
     DashboardPage,
     SettingPage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +47,8 @@ const cloudSettings: CloudSettings = {
     DashboardPage,
     SettingPage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   providers: [
     StatusBar,

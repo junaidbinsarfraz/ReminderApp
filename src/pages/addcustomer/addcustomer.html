@@ -11,22 +11,22 @@
 
     <ion-item>
         <ion-label floating>Policy No</ion-label>
-        <ion-input type="text" [(ngModel)]="policyNo" [disabled]="*isEditing"></ion-input>
+        <ion-input type="text" [(ngModel)]="customer.policyNo" [disabled]="isEditing"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label floating>Policy Owner</ion-label>
-        <ion-input type="text" [(ngModel)]="policyOwner" [disabled]="*isEditing"></ion-input>
+        <ion-input type="text" [(ngModel)]="customer.policyOwner" [disabled]="isEditing"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label floating>Proposed Insured</ion-label>
-        <ion-input type="text" [(ngModel)]="proposedInsured"></ion-input>
+        <ion-input type="text" [(ngModel)]="customer.proposedInsured"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label floating>Payment Mode</ion-label>
-        <ion-select [(ngModel)]="paymentMode">
+        <ion-select [(ngModel)]="customer.paymentMode">
             <ion-option value="Monthly">Monthly</ion-option>
             <ion-option value="Quarterly">Quarterly</ion-option>
             <ion-option value="Semi-Annually">Semi-Annually</ion-option>
@@ -41,23 +41,24 @@
 
     <ion-item>
         <ion-label floating>Method of Payment </ion-label>
-        <ion-select [(ngModel)]="methodOfPayment ">
+        <ion-select [(ngModel)]="customer.methodOfPayment ">
             <ion-option value="Direct Pay">Direct Pay</ion-option>
             <ion-option value="Debit/ Credit Card">Debit/ Credit Card</ion-option>
         </ion-select>
     </ion-item>
 
-    <ion-item *ngIf="methodOfPayment == 'Debit/ Credit Card'">
+    <ion-item *ngIf="customer.methodOfPayment == 'Debit/ Credit Card'" (ngModelChange)="someEvent($event)">
         <ion-label floating>CC Last 4 digits</ion-label>
-        <ion-input type="text" [(ngModel)]="ccLast4digits"></ion-input>
+        <ion-input type="text" [(ngModel)]="customer.ccLast4digits"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label floating>Premium</ion-label>
-        <ion-input type="text" [(ngModel)]="premium"></ion-input>
+        <ion-input type="text" [(ngModel)]="customer.premium"></ion-input>
     </ion-item>
 
-    <button ion-button color="primary" full (click)="doSave()">Save</button>
-    <button ion-button color="primary" full (click)="doCancel()">Cancel</button>
-
+    <ion-item no-lines>
+        <button ion-button color="primary" full (click)="doSave()">Save</button>
+        <button ion-button color="primary" full (click)="doCancel()">Cancel</button>
+    </ion-item>
 </ion-content>

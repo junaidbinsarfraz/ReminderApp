@@ -5,9 +5,17 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button>Add</button>
   <ion-item-group>
-    <ion-item>
+    <ion-item no-lines>
+      <button padding ion-button icon-left (click)="showCustomer()">
+      <ion-icon name="person-add"></ion-icon>
+      Add
+      </button>
+    </ion-item>
+    <ion-item *ngIf="customers.length == 0">
+      No Record Found
+    </ion-item>
+    <ion-item *ngIf="customers.length > 0">
       <ion-row>
         <ion-col>
           <strong>Policy No.</strong>
@@ -16,16 +24,17 @@
           <strong>Policy Owner</strong>
         </ion-col>
         <ion-col>
-          <strong>Customer</strong>
+          <strong>Due Date</strong>
         </ion-col>
       </ion-row>
 
     </ion-item>
-    <ion-item>
-      <ion-row (click)="presentActionSheet();"><ion-col>3444</ion-col><ion-col>John Smith</ion-col><ion-col>28 Mar 2017</ion-col></ion-row>
-    </ion-item>
-    <ion-item>
-      <ion-row (click)="presentActionSheet();"><ion-col>5434</ion-col><ion-col>Junaid</ion-col><ion-col>28 Mar 2017</ion-col></ion-row>
+    <ion-item *ngFor="let selectedCustomer of customers">
+      <ion-row (click)="presentActionSheet(selectedCustomer);">
+        <ion-col>{{ selectedCustomer.policyNo }}</ion-col>
+        <ion-col>{{ selectedCustomer.policyOwner }}</ion-col>
+        <ion-col>{{ selectedCustomer.dueDate }}</ion-col>
+      </ion-row>
     </ion-item>
   </ion-item-group>
 
