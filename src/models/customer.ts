@@ -7,11 +7,14 @@ export class Customer {
     public dueDate: string;
     public methodOfPayment: string;
     public premium: string;
-    public ccLast4digits?: string;
+    public ccExpire?: string;
+    public paid?: boolean;
+    public cardRenewed?: boolean;
 
-    constructor(policyNo: string = "", policyOwner: string = "", proposedInsured: string = "", paymentMode: string = ""
-        , dueDate: string = "", methodOfPayment: string = "", premium: string = "", ccLast4digits: string = "") {
-            this.ccLast4digits = ccLast4digits;
+    constructor(policyNo: string = "", policyOwner: string = "", proposedInsured: string = "", paymentMode: string = "Monthly"
+        , dueDate: string = "", methodOfPayment: string = "Direct Pay", premium: string = "", ccExpire: string = ""
+        , paid: boolean = false, cardRenewed: boolean = false) {
+            this.ccExpire = ccExpire;
             this.dueDate = dueDate;
             this.methodOfPayment = methodOfPayment;
             this.paymentMode = paymentMode;

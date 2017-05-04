@@ -32,8 +32,16 @@ export class CustomersPage {
       // Extract customer
       if (!data.isEditing) {
         this.customers.push(data.customer);
-        this.storage.set('customers', this.customers);
+      } else {
+        let index: number = this.customers.indexOf(data.customer);
+        // console.log(index);
+        if (index !== -1) {
+          this.customers[index] = data.customer;
+        }
       }
+
+      this.storage.set('customers', this.customers);
+      this.events.publish('customerListUpdated');
     });
   }
 
@@ -59,6 +67,7 @@ export class CustomersPage {
             if (index !== -1) {
               this.customers.splice(index, 1);
               this.storage.set('customers', this.customers);
+              this.events.publish('customerListUpdated');
             }
           }
         }, {

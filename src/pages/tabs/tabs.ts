@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { CcExpirePage } from '../ccexpire/ccexpire';
 import { CustomersPage } from '../customers/customers';
@@ -19,7 +20,7 @@ export class TabsPage {
   public dashboardEventCount: number = 0;
   public ccExpireEventCount: number = 0;
 
-  constructor(public events: Events) {
+  constructor(public events: Events, public storage: Storage) {
 
     if (this.dashboardEventCount == 0) {
       this.dashboardEventCount = null;
@@ -29,24 +30,24 @@ export class TabsPage {
       this.ccExpireEventCount = null;
     }
 
-    // Subscribe with the dashboard and ccExpire update events
-    this.events.subscribe('dashboardEventUpdated', () => {
-      // Get updated value
+    this.events.subscribe('updateTabs', () => {
+      this.storage.get("ccExpireEventCount").then((val) => {
+        this.ccExpireEventCount = val;
 
+        this.storage.get("dashboardEventCount").then((val) => {
+          this.dashboardEventCount = val;
 
-      if (this.dashboardEventCount == 0) {
-        this.dashboardEventCount = null;
-      }
-    })
+          if (this.dashboardEventCount == 0) {
+            this.dashboardEventCount = null;
+          }
 
-    this.events.subscribe('ccExpireEventUpdated', () => {
-      // Get updated value
+          if (this.ccExpireEventCount == 0) {
+            this.ccExpireEventCount = null;
+          }
+        });
+      });
 
-
-      if (this.ccExpireEventCount == 0) {
-        this.ccExpireEventCount = null;
-      }
-    })
+    });
 
   }
 }

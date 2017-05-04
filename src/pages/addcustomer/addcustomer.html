@@ -48,8 +48,8 @@
     </ion-item>
 
     <ion-item *ngIf="customer.methodOfPayment == 'Debit/ Credit Card'" (ngModelChange)="someEvent($event)">
-        <ion-label floating>CC Last 4 digits</ion-label>
-        <ion-input type="text" [(ngModel)]="customer.ccLast4digits"></ion-input>
+        <ion-label floating>CC Expire Date</ion-label>
+        <ion-datetime displayFormat="MM/YYYY" [(ngModel)]="ccExpireDate"></ion-datetime>
     </ion-item>
 
     <ion-item>
