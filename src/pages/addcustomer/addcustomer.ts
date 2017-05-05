@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, NavParams, Events } from 'ionic-angular';
+import { NavController, AlertController, NavParams, Events } from 'ionic-angular';
 
 import { Customer } from '../../models/customer';
+
+import LoaderUtil from '../../utils/loader.util';
 
 @Component({
     selector: 'page-addcustomer',
@@ -20,13 +22,19 @@ export class AddCustomerPage {
         if (this.isEditing) {
             this.dueDate = new Date(this.customer.dueDate).toISOString();
             if (this.customer.methodOfPayment == "Debit/ Credit Card") {
-                this.ccExpireDate = (new Date("1/" + this.customer.ccExpire)).toISOString();
+                const [month, year] = this.customer.ccExpire.split('/');
+                console.log(this.customer.ccExpire);
+                console.log([month, year]);
+                
+                var ccExpireDateLastDay = new Date(Number(year), Number(month), 0);
+                console.log(ccExpireDateLastDay);
+                this.ccExpireDate = (ccExpireDateLastDay).toISOString();
             }
         }
     }
 
     doSave() {
-
+        // LoaderUtil.showDefaultLoader();
         // TODO: Validate
         if ((this.customer.methodOfPayment == "" || this.customer.paymentMode == "" || this.customer.policyNo == ""
             || this.customer.policyOwner == "" || this.customer.premium == "" || this.customer.proposedInsured == "")
@@ -37,6 +45,7 @@ export class AddCustomerPage {
                 subTitle: 'All fields are required.',
                 buttons: ['OK']
             });
+            // LoaderUtil.dismissLoader();
             alert.present();
 
             return;
@@ -48,12 +57,17 @@ export class AddCustomerPage {
 
         var selectedCcExpireDate = new Date(this.ccExpireDate);
 
+        console.log(this.ccExpireDate);
+        console.log(selectedCcExpireDate);
+
         this.customer.ccExpire = (selectedCcExpireDate.getMonth() + 1) + "/" + selectedCcExpireDate.getFullYear();
 
         if (this.isEditing) {
             this.customer.cardRenewed = false;
             this.customer.paid = false;
         }
+
+        // LoaderUtil.dismissLoader();
 
         this.events.publish('customerSaved', {
             customer: this.customer,

@@ -40,8 +40,9 @@ export class CustomersPage {
         }
       }
 
-      this.storage.set('customers', this.customers);
-      this.events.publish('customerListUpdated');
+      this.storage.set('customers', this.customers).then(() => {
+        this.events.publish('customerListUpdated');
+      });
     });
   }
 

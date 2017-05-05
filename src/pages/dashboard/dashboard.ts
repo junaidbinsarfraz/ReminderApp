@@ -27,7 +27,16 @@ export class DashboardPage {
   }
 
   updateLists() {
+    this.customersDueDayOne = [];
+    this.customersDueDayThree = [];
+    this.customersDueDaySeven = [];
+
     this.storage.get('customers').then((val) => {
+
+      this.customersDueDayOne = [];
+      this.customersDueDayThree = [];
+      this.customersDueDaySeven = [];
+
       if (val) {
 
         val.forEach(customer => {
@@ -52,16 +61,13 @@ export class DashboardPage {
           }
 
         });
-
-      } else {
-        this.customersDueDayOne = [];
-        this.customersDueDayThree = [];
-        this.customersDueDaySeven = [];
       }
 
-      this.storage.set("dashboardEventCount", this.customersDueDayOne.length + this.customersDueDayThree.length + this.customersDueDaySeven.length);
-      
-      this.events.publish("updateTabs");
+      this.storage.set("dashboardEventCount", this.customersDueDayOne.length + this.customersDueDayThree.length + this.customersDueDaySeven.length).then(() => {
+
+        this.events.publish("updateTabs");
+      });
+
     });
   }
 
